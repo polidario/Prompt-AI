@@ -6,17 +6,18 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 export default function Nav() {
-    const isUserLoggedIn = true;
+    const { data: session } = useSession();
     const [providers, setProviders] = useState(null);
     const [profileToggleDropdown, setProfileToggleDropdown] = useState(false);
+    
     useEffect(() => {
-        const setProviders = async () => {
+        const setupProviders = async () => {
             const response = await getProviders();
 
             setProviders(response);
         }
 
-        setProviders();
+        setupProviders();
     }, [])
 
     return (
@@ -34,7 +35,7 @@ export default function Nav() {
 
             <div className="hidden sm:flex">
                 {
-                    isUserLoggedIn ? (
+                    session?.user ? (
                         <div className='flex gap-3 md:gap-5'>
                             <Link 
                                 href="/start-here"
@@ -86,7 +87,7 @@ export default function Nav() {
             </div>
 
             <div className="flex relative sm:hidden">
-                {isUserLoggedIn ? (
+                {session?.user ? (
                     <div className='flex'>
                         <Image
                             src="/assets/images/profile.svg"
@@ -124,20 +125,18 @@ export default function Nav() {
                     
                 ) : (
                     <>
-                        {
-                            providers &&
-                                Object.values(providers).map((provider) => {
-                                    (
-                                        <button 
-                                            type="button"
-                                            key={provider.name}
-                                            onClick={() => signIn(provider.id)}
-                                            className='black_btn'
-                                        >
-                                            Sign In
-                                        </button>
-                                    )
-                                })
+                        {console.log(providers)}
+                        {providers &&
+                            Object.values(providers).map((provider) => (
+                                <button 
+                                    type="button"
+                                    key={provider.name}
+                                    onClick={() => signIn(provider.id)}
+                                    className='black_btn'
+                                >
+                                    Sign In
+                                </button>
+                            ))
                         }
                     </>
                 )}
