@@ -89,6 +89,10 @@
   @apply mt-5 text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl;
 }
 
+.purple_gradient {
+  @apply bg-gradient-to-r from-fuchsia-500 via-purple-600 to-violet-500 bg-clip-text text-transparent;
+}
+
 .orange_gradient {
   @apply bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 bg-clip-text text-transparent;
 }
@@ -102,7 +106,7 @@
 }
 
 .desc {
-  @apply mt-5 text-lg text-gray-600 sm:text-xl max-w-2xl;
+  @apply mt-5 mx-5 text-sm text-gray-600 sm:text-xl max-w-2xl;
 }
 
 .search_input {
