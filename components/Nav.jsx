@@ -56,7 +56,7 @@ export default function Nav() {
                                 href="/profile"
                             >
                                 <Image
-                                    src="/assets/images/profile.svg"
+                                    src={session?.user.image}
                                     width={37}
                                     height={37}
                                     alt="Profile"
@@ -90,7 +90,7 @@ export default function Nav() {
                 {session?.user ? (
                     <div className='flex'>
                         <Image
-                            src="/assets/images/profile.svg"
+                            src={session?.user.image}
                             width={37}
                             height={37}
                             alt="Profile"
@@ -125,7 +125,6 @@ export default function Nav() {
                     
                 ) : (
                     <>
-                        {console.log(providers)}
                         {providers &&
                             Object.values(providers).map((provider) => (
                                 <button 
