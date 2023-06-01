@@ -1,12 +1,16 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { useSession, signIn } from 'next-auth/react';
 import ChatLine from './ChatLine';
+import axios from 'axios';
 
 export default function Conversations() {
     const [chatInputValue, setChatInputValue] = useState('');
     const [chatLog, setChatLog] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const { data: session } = useSession();
+
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -18,7 +22,27 @@ export default function Conversations() {
     }
 
     const sendMessage = (message) => {
-        // TODO
+        if(!session?.user) signIn();
+
+        const url = '/api/chat';
+        setIsLoading(true);
+        
+		const data = {
+            model: "gpt-3.5-turbo-0301",
+            messages: [{
+                "role": "user",
+                "content": message
+            }]
+        }
+        axios.post(url, data).then((response) => {
+            const message = response.data;
+            console.log(message.data.choices[0].message.content);
+            setChatLog((prevChatLog) => [...prevChatLog, { role: "assistant", message: message.data.choices[0].message.content }])
+            setIsLoading(false);
+        }).catch((error) => {
+            setIsLoading(false);
+            console.log(error);
+        });
     }
 
     useEffect(() => {

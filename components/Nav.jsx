@@ -33,7 +33,7 @@ export default function Nav() {
                 <p className="logo_text">Reminisce</p>
             </Link>
 
-            <div className="hidden sm:flex">
+            <div className="sm:flex hidden">
                 {
                     session?.user ? (
                         <div className='flex gap-3 md:gap-5'>
@@ -66,27 +66,26 @@ export default function Nav() {
                         </div>
                     ) : (
                         <>
-                            {
-                                providers &&
-                                    Object.values(providers).map((provider) => {
-                                        (
-                                            <button 
-                                                type="button"
-                                                key={provider.name}
-                                                onClick={() => signIn(provider.id)}
-                                                className='black_btn'
-                                            >
-                                                Sign In
-                                            </button>
-                                        )
-                                    })
+                            {providers &&
+                                Object.values(providers).map((provider) => 
+                                    (
+                                        <button 
+                                            type="button"
+                                            key={provider.name}
+                                            onClick={() => signIn(provider.id)}
+                                            className='black_btn'
+                                        >
+                                            Sign In
+                                        </button>
+                                    )
+                                )
                             }
                         </>
                     )
                 }
             </div>
 
-            <div className="flex relative sm:hidden">
+            <div className="sm:hidden flex relative">
                 {session?.user ? (
                     <div className='flex'>
                         <Image
