@@ -1,4 +1,5 @@
 import '@assets/styles/theme.css'
+import Footer from '@components/Footer'
 import Nav from '@components/Nav'
 import Provider from '@components/Provider'
 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
 					<Nav />
 					{children}
 				</main>
+				<Footer />
 			</Provider>
 		</body>
     </html>
