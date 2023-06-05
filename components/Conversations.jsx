@@ -13,6 +13,10 @@ export default function Conversations() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        if(!session?.user) {
+            signIn();
+            return;
+        }
 
         setChatLog((prevChatLog) => [...prevChatLog, { role: 'user', message: chatInputValue }])
 
@@ -22,8 +26,6 @@ export default function Conversations() {
     }
 
     const sendMessage = (message) => {
-        if(!session?.user) signIn();
-
         const url = '/api/chat';
         setIsLoading(true);
         
